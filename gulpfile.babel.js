@@ -10,7 +10,7 @@ import {userConfig}		from './package.json';
 
 const materials = {
 	js: {
-		source: path.join(userConfig.sourceDir, 'js/**/*.js'),
+		source: path.join(userConfig.sourceDir, 'js/**/*.js*'),
 		dest: 	path.join(userConfig.destDir, 'js'),
 		tasks:	['jsHandle', 'jsHint'],
 	},

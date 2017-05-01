@@ -1,35 +1,35 @@
 {
   "name": "web-boilerplate",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A simple es6-based web boilerplate using gulp, babel and webpack.",
   "author": "Lir Locker",
   "license": "ISC",
   "repository": "https://github.com/lirlocker/web-boilerplate.git",
   "babel": {
     "presets": [
-      "es2015"
+      "es2015",
+      "react"
     ]
   },
-
   "userConfig": {
-      "sourceDir":  "source/",
-      "destDir":    "public/",
-      "gulpWebserverConfig": {
-          "livereload": true,
-          "directoryListing": false,
-          "open": "http://localhost:8000/",
-          "host": "0.0.0.0"
-      },
-      "entryPoint": "source/js/main.js",
-      "bundleDest": "public/js",
-      "bundleFilename": "bundle.js"
+    "sourceDir": "source/",
+    "destDir": "public/",
+    "gulpWebserverConfig": {
+      "livereload": true,
+      "directoryListing": false,
+      "open": "http://localhost:8000/",
+      "host": "0.0.0.0"
+    },
+    "entryPoint": "source/js/main.js",
+    "bundleDest": "public/js",
+    "bundleFilename": "bundle.js"
   },
-
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
     "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-jshint": "^2.0.4",
@@ -37,6 +37,7 @@
     "gulp-webpack": "^1.5.0",
     "gulp-webserver": "^0.9.1",
     "jshint": "^2.9.4",
+    "jshint-stylish": "^2.2.1",
     "onchange": "^3.2.1",
     "path": "^0.12.7",
     "uglifyjs-webpack-plugin": "^0.4.3",

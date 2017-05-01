@@ -1,2 +1,5 @@
+/*
+jshint esversion: 6
+*/
 import second from "./second";
-console.log(second['hello']);
+console.log(second.hello);
