@@ -1,1 +1,0 @@
-!function(t){function e(o){if(r[o])return r[o].exports;var n=r[o]={exports:{},id:o,loaded:!1};return t[o].call(n.exports,n,n.exports,e),n.loaded=!0,n.exports}var r={};e.m=t,e.c=r,e.p="",e(0)}([function(t,e,r){"use strict";var o=r(1),n=function(t){return t&&t.__esModule?t:{default:t}}(o);console.log(n.default)},function(t,e){"use strict";t.exports={name:"lir"}}]);

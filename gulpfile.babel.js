@@ -1,6 +1,6 @@
 import gulp			    from 'gulp';
 import gutil		    from 'gulp-util';
-import jshint		    from 'gulp-jshint';
+import eslint		    from 'gulp-eslint';
 import babel		    from 'gulp-babel';
 import webpack			from 'gulp-webpack';
 import webserver		from 'gulp-webserver';
@@ -12,7 +12,7 @@ const materials = {
 	js: {
 		source: path.join(userConfig.sourceDir, 'js/**/*.js*'),
 		dest: 	path.join(userConfig.destDir, 'js'),
-		tasks:	['jsHandle', 'jsHint'],
+		tasks:	['jsHandle', 'jsLinting'],
 	},
 	html: {
 		source: path.join(userConfig.sourceDir, '*.html'),
@@ -57,13 +57,13 @@ gulp.task('htmlHandle', () => {
 });
 
 gulp.task('cssHandle', () => {
-    gulp.src(materials.css.source).pipe(gulp.dest(materials.html.dest));
+    gulp.src(materials.css.source).pipe(gulp.dest(materials.css.dest));
 });
 
-gulp.task('jsHint', () => {
+gulp.task('jsLinting', () => {
     gulp.src(materials.js.source)
-		.pipe(jshint())
-		.pipe(jshint.reporter('jshint-stylish'));
+		.pipe(eslint())
+		.pipe(eslint.format());
 });
 
 gulp.task('jsHandle', () => {
