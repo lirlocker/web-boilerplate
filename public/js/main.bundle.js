@@ -1,0 +1,2 @@
+!function(e){function o(r){if(t[r])return t[r].exports;var l=t[r]={exports:{},id:r,loaded:!1};return e[r].call(l.exports,l,l.exports,o),l.loaded=!0,l.exports}var t={};o.m=e,o.c=t,o.p="",o(0)}([function(e,o,t){"use strict";var r=t(1),l=function(e){return e&&e.__esModule?e:{default:e}}(r);console.log(l.default.hello)},function(e,o){"use strict";e.exports={hello:"world"}}]);
+//# sourceMappingURL=main.bundle.js.map
