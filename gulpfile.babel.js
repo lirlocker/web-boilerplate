@@ -8,6 +8,8 @@ import path				from 'path';
 import UglifyJSPlugin	from 'uglifyjs-webpack-plugin';
 import {userConfig}		from './package.json';
 
+userConfig.production = !!gutil.env.production;
+
 const materials = {
 	js: {
 		source: path.join(userConfig.sourceDir, 'js/**/*.js*'),
@@ -41,8 +43,6 @@ gulp.task('webserver', () => {
 
 gulp.task('watch', () => {
 	gutil.log('Watching for changes.');
-
-	// Watch the first element in the array, and use the tasks in the second.
 	for (let prop in materials) {
 		let prop = materials[prop];
 		gulp.watch(prop.source, prop.tasks);
@@ -67,27 +67,32 @@ gulp.task('jsLinting', () => {
 });
 
 gulp.task('jsHandle', () => {
+
+	let webpackConfig = {
+		output: {
+			filename: userConfig.bundleFilename,
+		},
+		module: {
+			loaders: [{
+					test: /\.jsx?$/,
+					loader: 'babel-loader',
+			}]
+		},
+		stats: {
+			colors: true
+		},
+		devtool: 'source-map'
+	}
+
+	if (userConfig.production) {
+		webpackConfig.plugins = [
+			new UglifyJSPlugin({
+				sourceMap: true
+			})
+		];
+	}
 	// This packs the JS files, transpiles and uglifies them.
 	gulp.src(userConfig.entryPoint)
-		.pipe(webpack({
-		    output: {
-		        filename: userConfig.bundleFilename,
-		    },
-		    module: {
-		        loaders: [{
-		                test: /\.jsx?$/,
-		                loader: 'babel-loader',
-		        }]
-		    },
-		    plugins: [
-		        new UglifyJSPlugin({
-					sourceMap: true
-				})
-		    ],
-		    stats: {
-		        colors: true
-		    },
-		    devtool: 'source-map'
-		}))
+		.pipe(webpack(webpackConfig))
 		.pipe(gulp.dest(userConfig.bundleDest));
 });
