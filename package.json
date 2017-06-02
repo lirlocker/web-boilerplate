@@ -11,9 +11,9 @@
     "devDir": "develpoment/",
     "gulpWebserverConfig": {
       "livereload": true,
-      "directoryListing": false,
       "open": "http://localhost:8000/",
-      "host": "0.0.0.0"
+      "host": "0.0.0.0",
+      "directoryListing": "false"
     }
   },
   "devDependencies": {
