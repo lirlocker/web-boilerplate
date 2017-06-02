@@ -2,11 +2,12 @@ import gulp			    from 'gulp';
 import gutil		    from 'gulp-util';
 import eslint		    from 'gulp-eslint';
 import babel		    from 'gulp-babel';
-import webpack			from 'gulp-webpack';
 import webserver		from 'gulp-webserver';
 import path				from 'path';
+import webpack 			from 'webpack';
 import UglifyJSPlugin	from 'uglifyjs-webpack-plugin';
 import {userConfig}		from './package.json';
+import webpackConfig 	from './webpack.config.babel.js';
 
 userConfig.production = !!gutil.env.production;
 
@@ -68,22 +69,6 @@ gulp.task('jsLinting', () => {
 
 gulp.task('jsHandle', () => {
 
-	let webpackConfig = {
-		output: {
-			filename: userConfig.bundleFilename,
-		},
-		module: {
-			loaders: [{
-					test: /\.jsx?$/,
-					loader: 'babel-loader',
-			}]
-		},
-		stats: {
-			colors: true
-		},
-		devtool: 'source-map'
-	}
-
 	if (userConfig.production) {
 		webpackConfig.plugins = [
 			new UglifyJSPlugin({
@@ -92,7 +77,8 @@ gulp.task('jsHandle', () => {
 		];
 	}
 	// This packs the JS files, transpiles and uglifies them.
-	gulp.src(userConfig.entryPoint)
-		.pipe(webpack(webpackConfig))
-		.pipe(gulp.dest(userConfig.bundleDest));
+	webpack(webpackConfig, (err, stats) => {
+		if(err) throw new gutil.PluginError("webpack", err);
+		gutil.log("[webpack]", stats.toString());
+	});
 });

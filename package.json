@@ -5,12 +5,6 @@
   "author": "Lir Locker",
   "license": "ISC",
   "repository": "https://github.com/lirlocker/web-boilerplate.git",
-  "babel": {
-    "presets": [
-      "es2015",
-      "react"
-    ]
-  },
   "userConfig": {
     "sourceDir": "source/",
     "destDir": "public/",
@@ -20,18 +14,6 @@
       "directoryListing": false,
       "open": "http://localhost:8000/",
       "host": "0.0.0.0"
-    },
-    "entryPoint": "source/js/main.js",
-    "bundleDest": "public/js",
-    "bundleFilename": "bundle.js"
-  },
-  "eslintConfig": {
-    "parserOptions": {
-      "ecmaVersion": 6,
-      "sourceType": "module",
-      "ecmaFeatures": {
-        "jsx": true
-      }
     }
   },
   "devDependencies": {
@@ -45,12 +27,11 @@
     "gulp-babel": "^6.1.2",
     "gulp-eslint": "^3.0.1",
     "gulp-util": "^3.0.8",
-    "gulp-webpack": "^1.5.0",
     "gulp-webserver": "^0.9.1",
     "onchange": "^3.2.1",
     "path": "^0.12.7",
     "uglify-js": "^2.8.0",
     "uglifyjs-webpack-plugin": "^0.4.3",
-    "webpack": "^2.4.1"
+    "webpack": "^2.6.1"
   }
 }
