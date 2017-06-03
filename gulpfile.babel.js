@@ -1,3 +1,4 @@
+import sass             from 'gulp-sass';
 import gulp			    from 'gulp';
 import gutil		    from 'gulp-util';
 import eslint		    from 'gulp-eslint';
@@ -27,12 +28,17 @@ const materials = {
 		dest:	path.join(userConfig.destDir, 'css/'),
 		tasks:	['cssHandle'],
 	},
+	sass: {
+		source: path.join(userConfig.sourceDir, 'sass/**/*.scss'),
+		dest:	path.join(userConfig.destDir, 'css/'),		
+		tasks: ['sassHandle'],
+	}
 };
 
 
 // Default Task
 gutil.log('Gulp is running!');
-gulp.task('default', ['htmlHandle', 'cssHandle', 'jsHandle', 'watch', 'webserver']);
+gulp.task('default', ['htmlHandle', 'cssHandle', 'jsHandle', 'sassHandle', 'watch', 'webserver']);
 
 // Web Server
 gulp.task('webserver', () => {
@@ -60,6 +66,12 @@ gulp.task('htmlHandle', () => {
 gulp.task('cssHandle', () => {
     gulp.src(materials.css.source).pipe(gulp.dest(materials.css.dest));
 });
+gulp.task('sassHandle', () => {
+	gulp.src(materials.sass.source)
+		.pipe(sass().on('error', sass.logError))
+		.pipe(gulp.dest(materials.sass.dest))
+	;
+});
 
 gulp.task('jsLinting', () => {
     gulp.src(materials.js.source)
@@ -68,7 +80,6 @@ gulp.task('jsLinting', () => {
 });
 
 gulp.task('jsHandle', () => {
-
 	if (userConfig.production) {
 		webpackConfig.plugins = [
 			new UglifyJSPlugin({
