@@ -30,15 +30,20 @@ const materials = {
 	},
 	sass: {
 		source: path.join(userConfig.sourceDir, 'sass/**/*.scss'),
-		dest:	path.join(userConfig.destDir, 'css/'),		
+		dest:	path.join(userConfig.destDir, 'css/'),
 		tasks: ['sassHandle'],
+	},
+	resources: {
+		source: path.join(userConfig.sourceDir, 'resources/**/*.*'),
+		dest:   path.join(userConfig.destDir, 'resources/'),
+		tasks: ['copyResources'],
 	}
 };
 
 
 // Default Task
 gutil.log('Gulp is running!');
-gulp.task('default', ['htmlHandle', 'cssHandle', 'jsHandle', 'sassHandle', 'watch', 'webserver']);
+gulp.task('default', ['htmlHandle', 'copyResources', 'cssHandle', 'jsHandle', 'sassHandle', 'watch', 'webserver']);
 
 // Web Server
 gulp.task('webserver', () => {
@@ -92,4 +97,9 @@ gulp.task('jsHandle', () => {
 		if(err) throw new gutil.PluginError("webpack", err);
 		gutil.log("[webpack]", stats.toString());
 	});
+});
+gulp.task('copyResources', () => {
+	gulp.src(materials.resources.source)
+		.pipe(gulp.dest(materials.resources.dest))
+	;
 });
