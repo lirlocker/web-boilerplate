@@ -9,6 +9,8 @@ import webpack 			from 'webpack';
 import UglifyJSPlugin	from 'uglifyjs-webpack-plugin';
 import {userConfig}		from './package.json';
 import webpackConfig 	from './webpack.config.babel.js';
+import autoprefixer		from 'autoprefixer';
+import postcss 			from 'gulp-postcss';
 
 userConfig.production = !!gutil.env.production;
 
@@ -26,24 +28,24 @@ const materials = {
 	css: {
 		source: path.join(userConfig.sourceDir, 'css/**/*.css'),
 		dest:	path.join(userConfig.destDir, 'css/'),
-		tasks:	['cssHandle'],
+		tasks:	['cssHandle', 'autoPrefix'],
 	},
 	sass: {
 		source: path.join(userConfig.sourceDir, 'sass/**/*.scss'),
 		dest:	path.join(userConfig.destDir, 'css/'),
-		tasks: ['sassHandle'],
+		tasks: ['sassHandle', 'autoPrefix'],
 	},
-	resources: {
-		source: path.join(userConfig.sourceDir, 'resources/**/*.*'),
-		dest:   path.join(userConfig.destDir, 'resources/'),
-		tasks: ['copyResources'],
-	}
+	assets: {
+		source: path.join(userConfig.sourceDir, 'assets/**/*.*'),
+		dest:   path.join(userConfig.destDir, 'assets/'),
+		tasks: ['copyAssets'],
+	},
 };
 
 
 // Default Task
 gutil.log('Gulp is running!');
-gulp.task('default', ['htmlHandle', 'copyResources', 'cssHandle', 'jsHandle', 'sassHandle', 'watch', 'webserver']);
+gulp.task('default', ['htmlHandle', 'copyAssets', 'cssHandle', 'jsHandle', 'sassHandle', 'watch', 'webserver']);
 
 // Web Server
 gulp.task('webserver', () => {
@@ -52,7 +54,6 @@ gulp.task('webserver', () => {
 });
 
 // Watching
-
 gulp.task('watch', () => {
 	gutil.log('Watching for changes.');
 	for (let prop in materials) {
@@ -63,13 +64,16 @@ gulp.task('watch', () => {
 
 
 // Material Handling
-
 gulp.task('htmlHandle', () => {
-    gulp.src(materials.html.source).pipe(gulp.dest(materials.html.dest));
+    gulp.src(materials.html.source)
+		.pipe(gulp.dest(materials.html.dest))
+	;
 });
 
 gulp.task('cssHandle', () => {
-    gulp.src(materials.css.source).pipe(gulp.dest(materials.css.dest));
+    gulp.src(materials.css.source)
+		.pipe(gulp.dest(materials.css.dest))
+	;
 });
 gulp.task('sassHandle', () => {
 	gulp.src(materials.sass.source)
@@ -77,7 +81,12 @@ gulp.task('sassHandle', () => {
 		.pipe(gulp.dest(materials.sass.dest))
 	;
 });
-
+gulp.task('autoPrefix', () => {
+	gulp.src(materials.css.dest, {base: "./"})
+		.pipe(postcss([autoprefixer()]))
+		.pipe(gulp.dest("./"))
+	;
+});
 gulp.task('jsLinting', () => {
     gulp.src(materials.js.source)
 		.pipe(eslint())
@@ -98,8 +107,8 @@ gulp.task('jsHandle', () => {
 		gutil.log("[webpack]", stats.toString());
 	});
 });
-gulp.task('copyResources', () => {
-	gulp.src(materials.resources.source)
-		.pipe(gulp.dest(materials.resources.dest))
+gulp.task('copyAssets', () => {
+	gulp.src(materials.assets.source)
+		.pipe(gulp.dest(materials.assets.dest))
 	;
 });

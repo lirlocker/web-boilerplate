@@ -5,6 +5,7 @@
 body {
     text-align: center;
     font-family: 'Arial';
+    display: flex;
     h1 {
         @include sample();
         text-shadow: 1px 1px (5px - 1px) rgb(171, 31, 31);
