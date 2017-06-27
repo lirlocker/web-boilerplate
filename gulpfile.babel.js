@@ -40,12 +40,17 @@ const materials = {
 		dest:   path.join(userConfig.destDir, 'assets/'),
 		tasks: ['copyAssets'],
 	},
+    lib: {
+		source: path.join(userConfig.sourceDir, 'lib/**/*.*'),
+		dest:   path.join(userConfig.destDir, 'lib/'),
+		tasks: ['copyLib'],
+	}
 };
 
 
 // Default Task
 gutil.log('Gulp is running!');
-gulp.task('default', ['htmlHandle', 'copyAssets', 'cssHandle', 'jsHandle', 'sassHandle', 'watch', 'webserver']);
+gulp.task('default', ['htmlHandle', 'copyLib', 'copyAssets', 'cssHandle', 'jsHandle', 'sassHandle', 'watch', 'webserver']);
 
 // Web Server
 gulp.task('webserver', () => {
@@ -110,5 +115,10 @@ gulp.task('jsHandle', () => {
 gulp.task('copyAssets', () => {
 	gulp.src(materials.assets.source)
 		.pipe(gulp.dest(materials.assets.dest))
+	;
+});
+gulp.task('copyLib', () => {
+	gulp.src(materials.lib.source)
+		.pipe(gulp.dest(materials.lib.dest))
 	;
 });
