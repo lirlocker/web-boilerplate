@@ -8,3 +8,5 @@ A simple es6-based web boilerplate using gulp, babel and webpack.
  - CSS & HTML auto update
  - Automatic ES6 -> ES5
  - Bundles JS files & uglifies the bundle automatically on file change
+ - Lib & assets folders support
+ - CSS Autoprefixer support
